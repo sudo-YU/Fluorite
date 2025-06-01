@@ -1,0 +1,103 @@
+# ==================================
+# DevContainerを使った開発環境向け.dockerignore
+# チーム規模: 3〜4人
+# ==================================
+
+# Git関連 - コンテナに含める必要はないがクローンは必要
+.git/            # Gitデータは重いのでコンテナに含めない
+.git-blame-ignore-revs
+
+# キャッシュ・一時ファイル - 開発には不要
+**/.DS_Store     # macOSキャッシュ
+**/.cache/       # キャッシュディレクトリ
+**/*.log         # ログファイル
+**/*.swp         # Vimスワップファイル
+**/*.tmp         # 一時ファイル
+**/*~            # バックアップファイル
+
+# 環境変数 - セキュリティのため
+.env             # 本番環境変数
+.env.*           # 各環境の環境変数
+!.env.example    # 例示用は含める
+
+# ドキュメント類 - DevContainerでは必要に応じて含める
+docs/MyArchive/  # 個人的なアーカイブ
+# docs/ は含める - チーム開発では重要なため
+
+# データベース関連 - ボリュームマウントするので除外
+db/pgsql/data/   # データベースデータ（大きくなるため）
+db/pgsql/logs/   # ログファイル
+
+# ==================================
+# フロントエンド固有の無視設定
+# ==================================
+
+# ノードモジュールとnpm関連 - 各開発者のマシンで別々に管理
+**/node_modules/    # DevContainerではVolume Trickで管理するため
+**/.npm/
+**/npm-debug.log*
+**/.yarn-cache/
+**/yarn-error.log*
+
+# ビルド成果物 - 開発中に自動生成されるため
+!**/dist/         # VSCode拡張やAIアシスタント用のdistは含める
+**/build/
+**/.next/           # Next.js
+**/.nuxt/           # Nuxt.js
+
+# ==================================
+# バックエンド固有の無視設定
+# ==================================
+
+# Python関連 - キャッシュファイルは除外
+**/__pycache__/
+**/*.py[cod]
+**/*.so
+**/*.egg
+**/*.egg-info/
+**/.pytest_cache/
+**/.coverage
+
+# ==================================
+# DevContainer開発用の設定
+# ==================================
+
+# 一時ファイル - サーバー起動関連
+**/*.pid          # プロセスID記録ファイル
+**/*.socket       # UNIXソケットファイル
+**/.backend_server_info.json  # サーバー情報
+
+# エディタ設定 - 各開発者の設定を含める
+!.vscode/         # VSCode設定は含める（チーム共有のため）
+!.devcontainer/   # DevContainer設定は必須
+!.editorconfig    # エディタ設定は共有
+
+# CI/CD関連 - DevContainerには不要
+.github/workflows/ # GitHub Actions
+.gitlab-ci.yml     # GitLab CI
+.circleci/         # CircleCI
+.travis.yml        # Travis CI
+
+# コード品質・解析ツールの設定は共有
+!.eslintrc*       # ESLint設定
+!.prettierrc*     # Prettier設定
+!.flake8          # flake8設定
+!pyproject.toml   # Python関連設定
+!pylintrc         # pylint設定
+**/htmlcov/        # カバレッジレポート
+**/.mypy_cache/    # 型チェックキャッシュ
+**/.venv/          # 仮想環境 (使う場合)
+**/venv/
+**/ENV/
+**/htmlcov/
+**/.tox/
+**/.venv/
+**/venv/
+**/ENV/
+
+# ==================================
+# ポートファインダー一時ファイル
+# ==================================
+
+*frontend.pid
+*backend.pid

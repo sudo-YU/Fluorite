@@ -1,0 +1,58 @@
+{
+    "name": "ProjectStupro Development",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "forwardPorts": [3000, 5000, 8080],
+    "updateRemoteUserUID": true,
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "bradlc.vscode-tailwindcss",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-azuretools.vscode-docker",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "PKief.material-icon-theme",
+                "YoavBls.pretty-ts-errors",
+                "eamodio.gitlens",
+                "donjayamanne.githistory",
+                "mhutchie.git-graph"
+            ],
+            "settings": {
+                "python.formatting.provider": "black",
+                "python.formatting.blackPath": "/opt/venv/bin/black",
+                "editor.formatOnSave": true,
+                "files.trimTrailingWhitespace": true,
+                "files.insertFinalNewline": true,
+                "files.watcherExclude": {
+                    "/.git/objects/": true,
+                    "/.git/subtree-cache/": true
+                },
+                "[python]": {
+                    "editor.formatOnSave": true,
+                    "editor.tabSize": 4,
+                    "editor.insertSpaces": true
+                },
+                "[yaml]": {
+                    "editor.tabSize": 4,
+                    "editor.insertSpaces": true
+                },
+                "[shellscript]": {
+                    "editor.tabSize": 4,
+                    "editor.insertSpaces": true
+                },
+                "[javascriptreact]": {
+                    "editor.tabSize": 4,
+                    "editor.insertSpaces": true
+                },
+                "dev.containers.mountWaylandSocket": false,
+                "postAttachCommand": "chmod +x /workspace/scripts/start_dev_servers.sh && /workspace/scripts/start_dev_servers.sh"
+            }
+        }
+    },
+    "shutdownAction": "stopContainer"
+}

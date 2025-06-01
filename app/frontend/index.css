@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+    --color-gray-50: oklch(0.98 0.003 260);
+    --color-gray-900: oklch(0.2 0.02 260);
+    --spacing: 0.25rem;
+    --a: 0deg;
+}

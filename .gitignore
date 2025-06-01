@@ -1,0 +1,125 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# =================================
+# 環境変数 - セキュリティのため
+# =================================
+.env
+.env.*
+!.env.example
+
+# =================================
+# アプリケーション設定
+# =================================
+# 環境別設定ファイル（テンプレートは除外しない）
+app/backend/app/config/dev.py
+app/backend/app/config/prod.py
+!app/backend/app/config/*.example
+
+# =================================
+# 依存関係
+# =================================
+# Node.js
+node_modules
+**/node_modules/
+.npm
+.pnp
+.pnp.js
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+.coverage
+htmlcov/
+.pytest_cache/
+
+# =================================
+# ビルド・テスト成果物
+# =================================
+/coverage
+/build
+.cache
+
+# =================================
+# OS・エディタ固有のファイル
+# =================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# エディタ設定 - チーム共有設定は除外しない
+.idea/
+*.swp
+*.swo
+*~
+# VSCode - 共有すべき設定は除外しない
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+
+# =================================
+# データベース関連
+# =================================
+/db/pgsql/data
+/db/pgsql/logs
+
+# =================================
+# ドキュメント
+# =================================
+/docs/personal/
+/docs/MyArchive/
+
+# =================================
+# DevContainer関連
+# =================================
+# DevContainer設定は共有する（チーム開発のため）
+!.devcontainer/
+# ただし個人設定は除外
+.devcontainer/devcontainer.local.json
+
+# =================================
+# プロセス管理
+# =================================
+*.pid
+.frontend.pid
+.backend.pid
+.backend_server_info.json
+
+# =================================
+# ツール
+# =================================
+hadolint-Linux-x86_64
+
+# =================================
+# ログ
+# =================================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

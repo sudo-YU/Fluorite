@@ -1,0 +1,80 @@
+# filepath: /home/coydog16/flask/navStupro/docker-compose.yml
+
+services:
+  # マルチステージビルドを使用した統合開発環境
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/builder/Dockerfile
+      # devcontainerステージをターゲットに（VSCodeのDevContainer用）
+      target: devcontainer
+      args:
+        USER_ID: ${USER_ID:-1000}
+        GROUP_ID: ${GROUP_ID:-1000}
+    volumes:
+      # プロジェクトのルートディレクトリをマウント
+      - ./:/workspace:delegated,z
+      # node_modulesをボリュームにマウント（キャッシュのため）
+      - frontend_node_modules:/workspace/app/frontend/node_modules
+    ports:
+      - "3000:3000" # フロントエンド開発サーバー
+      - "5000:5000" # バックエンド開発サーバー
+    environment:
+      - NODE_ENV=development
+      - FLASK_APP=app/backend/app/app.py
+      - FLASK_DEBUG=1
+      - DATABASE_URL=${DATABASE_URL}
+      - PYTHONPATH=/workspace/app/backend
+    tty: true
+    stdin_open: true
+    command: sh -c "tail -f /dev/null"
+    depends_on:
+      - db
+    networks:
+      - appnet
+    env_file:
+      - .env
+
+  # データベース - PostgreSQL
+  db:
+    image: postgres:17
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./db/pgsql/logs:/var/log
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - PGPASSWORD=${POSTGRES_PASSWORD}
+      - TZ=Asia/Tokyo
+    ports:
+      - "5432:5432"
+    networks:
+      - appnet
+
+  # 開発用DB管理ツール - pgAdmin 4
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
+      - PGADMIN_CONFIG_SERVER_MODE=True
+    ports:
+      - "8080:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - db
+    networks:
+      - appnet
+
+# ↓ネットワーク名やボリューム名はプロジェクトごとに自由に変更してOKです！
+networks:
+  appnet:
+    driver: bridge
+
+volumes:
+  db_data:
+  frontend_node_modules:
+  pgadmin_data:
