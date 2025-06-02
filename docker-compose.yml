@@ -2,7 +2,7 @@
 
 services:
   # マルチステージビルドを使用した統合開発環境
-  app:
+  fluorite:
     build:
       context: .
       dockerfile: ./docker/builder/Dockerfile
@@ -31,7 +31,7 @@ services:
     depends_on:
       - db
     networks:
-      - appnet
+      - fluoritenet
     env_file:
       - .env
 
@@ -50,7 +50,7 @@ services:
     ports:
       - "5432:5432"
     networks:
-      - appnet
+      - fluoritenet
 
   # 開発用DB管理ツール - pgAdmin 4
   pgadmin:
@@ -67,11 +67,11 @@ services:
     depends_on:
       - db
     networks:
-      - appnet
+      - fluoritenet
 
 # ↓ネットワーク名やボリューム名はプロジェクトごとに自由に変更してOKです！
 networks:
-  appnet:
+  fluoritenet:
     driver: bridge
 
 volumes:
